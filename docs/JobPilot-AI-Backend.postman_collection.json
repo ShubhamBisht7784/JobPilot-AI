@@ -1,0 +1,342 @@
+{
+  "info": {
+    "name": "JobPilot AI Backend - Core APIs",
+    "description": "Core authentication, job discovery, AI resume, RAG and application preparation APIs. Set baseUrl and jwt variables.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "jwt",
+      "value": "PASTE_JOBPILOT_JWT_HERE"
+    },
+    {
+      "key": "resumeId",
+      "value": "1"
+    },
+    {
+      "key": "jobId",
+      "value": "1"
+    },
+    {
+      "key": "applicationId",
+      "value": "1"
+    },
+    {
+      "key": "agentTaskId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Example User\",\n  \"email\": \"user@example.com\",\n  \"password\": \"ChangeThisPassword123!\"\n}"
+            },
+            "url": "{{baseUrl}}/api/auth/register"
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"ChangeThisPassword123!\"\n}"
+            },
+            "url": "{{baseUrl}}/api/auth/login"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Job Discovery",
+      "item": [
+        {
+          "name": "Discover jobs with SerpAPI",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"Java Backend Developer fresher India\"\n}"
+            },
+            "url": "{{baseUrl}}/api/jobs/discover"
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI Resume",
+      "item": [
+        {
+          "name": "Analyze resume against job",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/ai/resumes/{{resumeId}}/analyze?jobId={{jobId}}"
+          }
+        },
+        {
+          "name": "Generate tailored resume draft",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/ai/resumes/{{resumeId}}/tailor?jobId={{jobId}}"
+          }
+        },
+        {
+          "name": "Index resume in pgvector",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/ai/resumes/{{resumeId}}/index"
+          }
+        },
+        {
+          "name": "Ask question about resume (RAG)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"question\": \"Which backend technologies and projects are listed in my resume?\"\n}"
+            },
+            "url": "{{baseUrl}}/api/ai/resumes/{{resumeId}}/chat"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Application Preparation",
+      "item": [
+        {
+          "name": "Generate cover letter and screening answers",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resumeId\": 1,\n  \"additionalContext\": \"I am applying for an entry-level Java backend role.\"\n}"
+            },
+            "url": "{{baseUrl}}/api/ai/applications/{{applicationId}}/prepare"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Agent",
+      "item": [
+        {
+          "name": "Execute job discovery task",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"Java Backend Developer fresher India\"\n}"
+            },
+            "url": "{{baseUrl}}/api/agent/tasks/{{agentTaskId}}/execute/job-discovery"
+          }
+        },
+        {
+          "name": "Execute AI resume analysis task",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resumeId\": 1,\n  \"jobId\": 1\n}"
+            },
+            "url": "{{baseUrl}}/api/agent/tasks/{{agentTaskId}}/execute/resume-analysis"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Automatic Job Discovery & Recommendations",
+      "item": [
+        {
+          "name": "Get Job Search Preferences",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/profile/job-preferences"
+          }
+        },
+        {
+          "name": "Save Job Search Preferences",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/profile/job-preferences",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"searchKeywords\": \"Java Backend Developer fresher,Spring Boot Developer\",\n  \"preferredLocations\": \"India,Remote\",\n  \"remoteOnly\": false,\n  \"autoDiscoveryEnabled\": true,\n  \"minimumMatchScore\": 40\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Run Manual Job Discovery",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/jobs/discover",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"Java Backend Developer fresher India\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Get Personalized Recommended Jobs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/jobs/recommended?page=0&size=20"
+          }
+        },
+        {
+          "name": "Refresh Personalized Matches",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/jobs/recommended/refresh"
+          }
+        }
+      ]
+    }
+  ]
+}
