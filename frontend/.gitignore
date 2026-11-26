@@ -1,0 +1,52 @@
+<<<<<<< HEAD
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+=======
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+target/
+.idea/
+*.iml
+.env
+application-local.properties
+# User-uploaded resumes and generated files
+uploads/
+*.log
+>>>>>>> 33495af58ed6815889651541d89498eaf9009ad5

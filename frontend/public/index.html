@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plagiarism Detection System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="app">
+        <header class="header">
+            <nav class="nav-container">
+                <div class="logo">Plagiarism Detection</div>
+                <div class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#how-it-works">How It Works</a>
+                    <button class="try-now-btn" onclick="scrollToInput()">Try Now</button>
+                </div>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <section class="hero" id="hero">
+                <div class="hero-content">
+                    <h1>Advanced Plagiarism Detection</h1>
+                    <p class="hero-subtitle">Upload your text and get instant plagiarism analysis</p>
+                    <div class="input-container">
+                        <div class="drop-zone" id="dropZone">
+                            <div class="drop-zone-content">
+                                <div class="upload-icon">📄</div>
+                                <p>Drag and drop your text file here</p>
+                                <p class="or-text">or</p>
+                                <label for="fileInput" class="file-input-label">Choose File</label>
+                                <input type="file" id="fileInput" accept=".txt,.doc,.docx" style="display: none;">
+                            </div>
+                        </div>
+                        <textarea id="textInput" placeholder="Paste your text here..."></textarea>
+                        <button class="analyze-btn" onclick="analyzeText()">Analyze Text</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="how-it-works" id="how-it-works">
+                <h2>How It Works</h2>
+                <div class="steps-container">
+                    <!-- Steps will be dynamically populated -->
+                </div>
+            </section>
+
+            <section class="features" id="features">
+                <h2>Key Features</h2>
+                <div class="features-grid">
+                    <!-- Features will be dynamically populated -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
